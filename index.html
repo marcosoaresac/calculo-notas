@@ -16,7 +16,12 @@
       <label for="av2">Nota da AV2:</label>
       <input id="av2" step="0.01" placeholder="insira nota av2" /><br /><br />
     </div>
-    <button onclick="calcularNota()">Calcular</button>
+
+    <button onclick="calcularNota()">Calcular</button> <br />
+    <div id="resultado"></div>
+    <br />
+    <button class="center-button" onclick="limparCampos()">Limpar Tudo</button
+    ><br /><br />
     <div id="notaFinalSection" style="display: none">
       <br />
       <div id="notaFinalInfo"></div>
@@ -33,20 +38,22 @@
       ><br /><br />
       <div id="resultado"></div>
       <br />
-      <button class="center-button" onclick="limparCampos()">Limpar Tudo</button
-      ><br /><br />
     </div>
 
     <footer><h4>Garay & Soares Ltda.</h4></footer>
 
     <script>
+      function validarNota(nota) {
+        return nota >= 0 && nota <= 10;
+      }
+
       function calcularNota() {
         const av1 = parseFloat(document.getElementById("av1").value);
         const av2 = parseFloat(document.getElementById("av2").value);
 
-        if (isNaN(av1) || isNaN(av2)) {
+        if (!validarNota(av1) || !validarNota(av2)) {
           document.getElementById("resultado").innerHTML =
-            "Por favor, insira notas válidas.";
+            "Por favor, insira notas válidas (entre 0 e 10).";
           return;
         }
 
@@ -56,14 +63,16 @@
           document.getElementById(
             "resultado"
           ).innerHTML = `Nota: ${nota.toFixed(2)} - Aprovado`;
-        } else if (nota <= 3.9) {
+        } else if (nota < 4) {
           document.getElementById(
             "resultado"
           ).innerHTML = `Nota: ${nota.toFixed(2)} - Reprovado`;
         } else {
+          // Se não for aprovado nem reprovado, limpar a mensagem anterior
+          document.getElementById("resultado").innerHTML = "";
+
           // Mostrar o campo de entrada da nota final
           document.getElementById("notaFinalSection").style.display = "block";
-          document.getElementById("resultado").innerHTML = ""; // Limpar resultado anterior
 
           // Calcular quanto o aluno precisa na final
           const notaFinalNecessaria = 10 - nota;
@@ -74,6 +83,7 @@
           )}`;
         }
       }
+
       function limparCampos() {
         // Limpar campos de entrada
         document.getElementById("av1").value = "";
@@ -87,6 +97,7 @@
         // Atualizar a página
         location.reload();
       }
+
       function calcularNotaFinal() {
         const notaFinalInput = parseFloat(
           document.getElementById("notaFinal").value
@@ -94,9 +105,13 @@
         const av1 = parseFloat(document.getElementById("av1").value);
         const av2 = parseFloat(document.getElementById("av2").value);
 
-        if (isNaN(notaFinalInput) || isNaN(av1) || isNaN(av2)) {
+        if (
+          !validarNota(notaFinalInput) ||
+          !validarNota(av1) ||
+          !validarNota(av2)
+        ) {
           document.getElementById("resultado").innerHTML =
-            "Por favor, insira notas válidas.";
+            "Por favor, insira notas válidas (entre 0 e 10).";
           return;
         }
 

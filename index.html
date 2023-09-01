@@ -20,8 +20,6 @@
     <button onclick="calcularNota()">Calcular</button> <br />
     <div id="resultado"></div>
     <br />
-    <button class="center-button" onclick="limparCampos()">Limpar Tudo</button
-    ><br /><br />
     <div id="notaFinalSection" style="display: none">
       <br />
       <div id="notaFinalInfo"></div>
@@ -36,10 +34,12 @@
       <button class="center-button" onclick="calcularNotaFinal()">
         Calcular Nota Final</button
       ><br /><br />
-      <div id="resultado"></div>
+      <div id="resultado_final"></div>
+
       <br />
     </div>
-
+    <button class="center-button" onclick="limparCampos()">Limpar Tudo</button
+    ><br /><br />
     <footer><h4>Garay & Soares Ltda.</h4></footer>
 
     <script>
@@ -110,7 +110,7 @@
           !validarNota(av1) ||
           !validarNota(av2)
         ) {
-          document.getElementById("resultado").innerHTML =
+          document.getElementById("resultado_final").innerHTML =
             "Por favor, insira notas válidas (entre 0 e 10).";
           return;
         }
@@ -120,13 +120,13 @@
 
         if (notaFinalCalculada >= 5) {
           document.getElementById(
-            "resultado"
+            "resultado_final"
           ).innerHTML = `Nota Final: ${notaFinalCalculada.toFixed(
             2
           )} - Aprovado na FINAL`;
         } else {
           document.getElementById(
-            "resultado"
+            "resultado_final"
           ).innerHTML = `Nota Final: ${notaFinalCalculada.toFixed(
             2
           )} - Reprovado na FINAL`;

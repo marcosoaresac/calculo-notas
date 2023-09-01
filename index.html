@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title class="titulo">Calculadora de Notas</title>
+  </head>
+  <body>
+    <h1>Calculadora de Notas</h1>
+
+    <div id="av1av2Section">
+      <label for="av1">Nota da AV1:</label>
+      <input id="av1" step="0.01" placeholder="insira nota av1" /><br /><br />
+
+      <label for="av2">Nota da AV2:</label>
+      <input id="av2" step="0.01" placeholder="insira nota av2" /><br /><br />
+    </div>
+    <button onclick="calcularNota()">Calcular</button>
+    <div id="notaFinalSection" style="display: none">
+      <br />
+      <div id="notaFinalInfo"></div>
+      <br />
+      <label for="notaFinal">Nota Final:</label>
+      <input
+        id="notaFinal"
+        step="0.01"
+        placeholder="insira nota final"
+      /><br /><br />
+
+      <button class="center-button" onclick="calcularNotaFinal()">
+        Calcular Nota Final</button
+      ><br /><br />
+      <div id="resultado"></div>
+      <br />
+      <button class="center-button" onclick="limparCampos()">Limpar Tudo</button
+      ><br /><br />
+    </div>
+
+    <footer><h4>Garay & Soares Ltda.</h4></footer>
+
+    <script>
+      function calcularNota() {
+        const av1 = parseFloat(document.getElementById("av1").value);
+        const av2 = parseFloat(document.getElementById("av2").value);
+
+        if (isNaN(av1) || isNaN(av2)) {
+          document.getElementById("resultado").innerHTML =
+            "Por favor, insira notas válidas.";
+          return;
+        }
+
+        const nota = (av1 + av2) / 2;
+
+        if (nota >= 7) {
+          document.getElementById(
+            "resultado"
+          ).innerHTML = `Nota: ${nota.toFixed(2)} - Aprovado`;
+        } else if (nota <= 3.9) {
+          document.getElementById(
+            "resultado"
+          ).innerHTML = `Nota: ${nota.toFixed(2)} - Reprovado`;
+        } else {
+          // Mostrar o campo de entrada da nota final
+          document.getElementById("notaFinalSection").style.display = "block";
+          document.getElementById("resultado").innerHTML = ""; // Limpar resultado anterior
+
+          // Calcular quanto o aluno precisa na final
+          const notaFinalNecessaria = 10 - nota;
+          document.getElementById(
+            "notaFinalInfo"
+          ).innerHTML = `Nota Necessária para passar: ${notaFinalNecessaria.toFixed(
+            2
+          )}`;
+        }
+      }
+      function limparCampos() {
+        // Limpar campos de entrada
+        document.getElementById("av1").value = "";
+        document.getElementById("av2").value = "";
+        document.getElementById("notaFinal").value = "";
+
+        // Ocultar a seção de resultado e informações da nota final
+        document.getElementById("notaFinalSection").style.display = "none";
+        document.getElementById("resultado").innerHTML = "";
+
+        // Atualizar a página
+        location.reload();
+      }
+      function calcularNotaFinal() {
+        const notaFinalInput = parseFloat(
+          document.getElementById("notaFinal").value
+        );
+        const av1 = parseFloat(document.getElementById("av1").value);
+        const av2 = parseFloat(document.getElementById("av2").value);
+
+        if (isNaN(notaFinalInput) || isNaN(av1) || isNaN(av2)) {
+          document.getElementById("resultado").innerHTML =
+            "Por favor, insira notas válidas.";
+          return;
+        }
+
+        const nota = (av1 + av2) / 2;
+        const notaFinalCalculada = (nota + notaFinalInput) / 2;
+
+        if (notaFinalCalculada >= 5) {
+          document.getElementById(
+            "resultado"
+          ).innerHTML = `Nota Final: ${notaFinalCalculada.toFixed(
+            2
+          )} - Aprovado na FINAL`;
+        } else {
+          document.getElementById(
+            "resultado"
+          ).innerHTML = `Nota Final: ${notaFinalCalculada.toFixed(
+            2
+          )} - Reprovado na FINAL`;
+        }
+      }
+    </script>
+  </body>
+</html>
